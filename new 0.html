@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Happy Birthday Rahul! 🎂💕</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      color: #333;
+      overflow-x: hidden;
+      padding: 25px 15px;
+      gap: 20px;
+    }
+
+    /* Countdown Banner */
+    #countdown-box {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 15px 22px;
+      border-radius: 20px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+      text-align: center;
+      z-index: 30;
+      width: 100%;
+      max-width: 440px;
+    }
+
+    #countdown-title {
+      font-size: 0.85rem;
+      color: #d63384;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    #timer {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #222;
+      margin-top: 5px;
+    }
+
+    /* Stage 1: Balloon Game */
+    #game-area {
+      width: 100%;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      z-index: 10;
+    }
+
+    .game-header {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 25px;
+      border-radius: 25px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      max-width: 400px;
+      width: 100%;
+      z-index: 20;
+    }
+
+    .game-header h1 {
+      color: #d63384;
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+    }
+
+    #score-board {
+      font-size: 1.2rem;
+      font-weight: bold;
+      color: #444;
+      background: #ffe6ee;
+      padding: 8px 18px;
+      border-radius: 15px;
+      display: inline-block;
+      margin-top: 5px;
+    }
+
+    .balloon {
+      position: fixed;
+      bottom: -80px;
+      font-size: 3.5rem;
+      cursor: pointer;
+      user-select: none;
+      animation: floatUp linear forwards;
+      z-index: 25;
+      transition: transform 0.1s;
+    }
+
+    .balloon:active {
+      transform: scale(1.3);
+    }
+
+    @keyframes floatUp {
+      to { transform: translateY(-120vh); }
+    }
+
+    /* Stage 2: All Unlocked Surprises */
+    #surprise-container {
+      display: none;
+      width: 100%;
+      max-width: 460px;
+      flex-direction: column;
+      align-items: center;
+      gap: 22px;
+      z-index: 25;
+      animation: fadeIn 0.8s ease;
+      padding-bottom: 35px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card-section {
+      background: rgba(255, 255, 255, 0.96);
+      padding: 22px;
+      border-radius: 25px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+      width: 100%;
+      text-align: center;
+    }
+
+    .card-section h2 {
+      color: #d63384;
+      font-size: 1.35rem;
+      margin-bottom: 8px;
+    }
+
+    /* NEW FEATURE 1: Interactive Birthday Cake */
+    .cake-stage {
+      margin: 18px auto 10px auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .candles-row {
+      display: flex;
+      gap: 22px;
+      margin-bottom: -4px;
+      z-index: 2;
+    }
+
+    .candle {
+      width: 12px;
+      height: 36px;
+      background: repeating-linear-gradient(45deg, #fff, #fff 5px, #ff477e 5px, #ff477e 10px);
+      border-radius: 4px;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .flame {
+      width: 14px;
+      height: 20px;
+      background: radial-gradient(circle, #fff700 20%, #ff9100 70%, #ff3d00 100%);
+      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+      position: absolute;
+      top: -22px;
+      left: -1px;
+      box-shadow: 0 0 12px #ffae00;
+      animation: flicker 0.4s infinite alternate;
+      transition: opacity 0.3s, transform 0.3s;
+    }
+
+    .flame.out {
+      opacity: 0;
+      transform: scale(0.2);
+    }
+
+    @keyframes flicker {
+      from { transform: scale(1) rotate(-3deg); }
+      to { transform: scale(1.1) rotate(3deg); }
+    }
+
+    .cake-top {
+      width: 170px;
+      height: 42px;
+      background: #ffb3c6;
+      border-radius: 14px 14px 4px 4px;
+      border-bottom: 6px solid #fff0f5;
+    }
+
+    .cake-bottom {
+      width: 210px;
+      height: 52px;
+      background: #ff758c;
+      border-radius: 8px 8px 16px 16px;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.12);
+    }
+
+    #wish-status {
+      margin-top: 12px;
+      font-weight: bold;
+      color: #c2185b;
+      font-size: 0.95rem;
+    }
+
+    /* NEW FEATURE 2: Spin the Birthday Wheel */
+    .wheel-container {
+      position: relative;
+      width: 220px;
+      height: 220px;
+      margin: 15px auto;
+    }
+
+    .wheel-pointer {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 24px;
+      z-index: 5;
+    }
+
+    #spin-wheel {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      border: 6px solid #ffd166;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+      background: conic-gradient(
+        #ff758c 0deg 60deg,
+        #ffd166 60deg 120deg,
+        #06d6a0 120deg 180deg,
+        #a0c4ff 180deg 240deg,
+        #bdb2ff 240deg 300deg,
+        #ffadad 300deg 360deg
+      );
+      transition: transform 3.5s cubic-bezier(0.17, 0.67, 0.12, 0.99);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .wheel-center {
+      width: 48px;
+      height: 48px;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    #wheel-result {
+      margin-top: 10px;
+      font-weight: bold;
+      color: #d63384;
+      min-height: 24px;
+      font-size: 1rem;
+    }
+
+    /* NEW FEATURE 3: Reasons I Love You Tap Deck */
+    .reason-card {
+      background: linear-gradient(135deg, #fff0f5, #ffe6ee);
+      border: 2px solid #ff758c;
+      border-radius: 18px;
+      padding: 22px 18px;
+      margin-top: 12px;
+      cursor: pointer;
+      min-height: 110px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.2s;
+      user-select: none;
+    }
+
+    .reason-card:active {
+      transform: scale(0.97);
+    }
+
+    #reason-text {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: #880e4f;
+      line-height: 1.45;
+    }
+
+    #reason-counter {
+      font-size: 0.78rem;
+      color: #777;
+      margin-top: 8px;
+    }
+
+    /* Scratch Cards Grid */
+    .scratch-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .scratch-wrapper {
+      position: relative;
+      width: 100%;
+      height: 75px;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      background: #fff0f5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px dashed #ff758c;
+    }
+
+    .scratch-secret {
+      font-size: 0.98rem;
+      font-weight: bold;
+      color: #c2185b;
+      padding: 0 15px;
+      user-select: none;
+    }
+
+    canvas.scratch-pad {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      cursor: crosshair;
+      touch-action: none;
+    }
+
+    /* Love Letter Styling */
+    .letter-box {
+      text-align: left;
+      font-size: 0.98rem;
+      line-height: 1.65;
+      color: #2d2d2d;
+      background: #fff9fb;
+      padding: 18px;
+      border-radius: 18px;
+      border-left: 4px solid #d63384;
+      margin-top: 10px;
+    }
+
+    .letter-box p {
+      margin-bottom: 12px;
+    }
+
+    .letter-box p:last-child {
+      margin-bottom: 0;
+      font-weight: bold;
+      color: #d63384;
+    }
+
+    button.action-btn {
+      margin-top: 14px;
+      padding: 10px 22px;
+      background: #d63384;
+      color: white;
+      border: none;
+      border-radius: 25px;
+      font-size: 0.95rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    button.action-btn:hover {
+      transform: scale(1.05);
+    }
+
+    button.reveal-all-btn {
+      background: #ff758c;
+      font-size: 0.85rem;
+      padding: 8px 18px;
+    }
+
+    /* Confetti */
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      top: -10px;
+      z-index: 50;
+      pointer-events: none;
+      animation: confettiFall 3s linear forwards;
+    }
+
+    @keyframes confettiFall {
+      to {
+        transform: translateY(110vh) rotate(720deg);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Live Countdown to 27 November -->
+  <div id="countdown-box">
+    <div id="countdown-title">Countdown to Rahul's Birthday (27 Nov) 🎂</div>
+    <div id="timer">Loading...</div>
+  </div>
+
+  <!-- Stage 1: Balloon Game -->
+  <div id="game-area">
+    <div class="game-header">
+      <h1>Hey Rahul! 💕</h1>
+      <p style="margin-bottom: 12px; color: #555;">Pop 8 floating hearts & balloons to unlock your birthday surprises!</p>
+      <div id="score-board">Popped: <span id="score">0</span> / 8</div>
+    </div>
+  </div>
+
+  <!-- Stage 2: All Unlocked Surprises -->
+  <div id="surprise-container">
+
+    <!-- NEW 1: Interactive Make-a-Wish Birthday Cake -->
+    <div class="card-section">
+      <h2>🎂 Make a Wish, Rahul!</h2>
+      <p style="font-size: 0.85rem; color: #666;">Tap each candle flame to blow them out!</p>
+      <div class="cake-stage">
+        <div class="candles-row">
+          <div class="candle" onclick="blowCandle(this)"><div class="flame"></div></div>
+          <div class="candle" onclick="blowCandle(this)"><div class="flame"></div></div>
+          <div class="candle" onclick="blowCandle(this)"><div class="flame"></div></div>
+          <div class="candle" onclick="blowCandle(this)"><div class="flame"></div></div>
+        </div>
+        <div class="cake-top"></div>
+        <div class="cake-bottom"></div>
+      </div>
+      <div id="wish-status">4 candles glowing ✨</div>
+    </div>
+
+    <!-- NEW 2: Spin the Birthday Wheel -->
+    <div class="card-section">
+      <h2>🎡 Spin Your Birthday Wheel</h2>
+      <p style="font-size: 0.85rem; color: #666;">Spin to win a bonus birthday treat today!</p>
+      <div class="wheel-container">
+        <div class="wheel-pointer">🔻</div>
+        <div id="spin-wheel">
+          <div class="wheel-center">🎁</div>
+        </div>
+      </div>
+      <button class="action-btn" onclick="spinWheel()">Spin Now! 🎉</button>
+      <div id="wheel-result"></div>
+    </div>
+
+    <!-- NEW 3: Why I Love You Tap Deck -->
+    <div class="card-section">
+      <h2>💖 Why I Love You</h2>
+      <p style="font-size: 0.85rem; color: #666;">Tap the card below to flip through little reminders!</p>
+      <div class="reason-card" onclick="nextReason()">
+        <div id="reason-text">Tap here to see Reason #1 💕</div>
+        <div id="reason-counter">Tap to flip</div>
+      </div>
+    </div>
+    
+    <!-- Scratch Cards Section (10 Gifts!) -->
+    <div class="card-section">
+      <h2>✨ Scratch to Reveal Your 10 Gifts ✨</h2>
+      <p style="font-size: 0.85rem; color: #666;">Rub each silver box with your finger or mouse!</p>
+      
+      <div class="scratch-grid">
+        <div class="scratch-wrapper">
+          <div class="scratch-secret">🫂 Unlimited Hugs & Cuddles Pass</div>
+          <canvas class="scratch-pad"></canvas>
+        </div>
+        <div class="scratch-wrapper">
+          <div class="scratch-secret">🍨 One Icecream for you / Date On Me!</div>
+          <canvas class="scratch-pad"></canvas>
+        </div>
+        <div class="scratch-wrapper">
+          <div class="scratch-secret">🫀 Lifetime VIP Access to My Heart</div>
+          <canvas class="scratch-pad"></canvas>
+        </div>
+        <div class="scratch-wrapper">
+          <div class="scratch-secret">🌷 Accept my proposal!</div>
+          <canvas class="scratch-pad"></canvas>
+        </div>
+        <div class="scratch-wrapper">
+          <div class="scratch-secret">🤗 I am always yours</div>
+          <canvas class="scratch-pad"></canvas>
+        </div>
+        <div class="scratch-wrapper">
+          <div class="scratch-secret">♾️ Infinite love for you</div>
+          <canvas class="scratch-pad"></canvas>
+        </div>
+        <div class="scratch-wrapper">
+          <div class="scratch-secret">📸 Cute Photoshoot Date Together</div>
+          <canvas class="scratch-pad"></canvas>
+        </div>
+        <div class="scratch-wrapper">
+          <div class="scratch-secret">👑 "You Win Every Argument Today" Golden Pass</div>
+          <canvas class="scratch-pad"></canvas>
+        </div>
+        <div class="scratch-wrapper">
+          <div class="scratch-secret">🌙 Late Night Talk!</div>
+          <canvas class="scratch-pad"></canvas>
+        </div>
+        <div class="scratch-wrapper">
+          <div class="scratch-secret">🎁 Ready for real surprise!</div>
+          <canvas class="scratch-pad"></canvas>
+        </div>
+      </div>
+
+      <button class="action-btn reveal-all-btn" onclick="revealAllGifts()">✨ Reveal All Gifts at Once</button>
+    </div>
+
+    <!-- Personal Love Letter Section -->
+    <div class="card-section">
+      <h2>💌 A Letter For You, Rahul</h2>
+      <div class="letter-box">
+        <p><strong>Happy birthday, my love....🐒</strong></p>
+        <p>Sometimes I look at you and feel so grateful that out of everyone in the world, I get to love you. You bring so much warmth, peace, and light into my days without even trying. Loving you is honestly the easiest and best thing I have ever done.💕</p>
+        <p>You are very close to my heart. Words cannot always express how special you are to me. I hope you always find reasons to smile, achieve everything you dream of, and stay happy. No matter how ordinary a day seems, your presence makes it special.🎀</p>
+        <p>Again HAPPY BIRTHDAY RAHUL you makes every ordinary day feel like golden hour for me and thank you for being my safe place and my favorite person.</p>
+        <p>Here is to another year of us. I love you endlessly.🫀🫂<br>I'm always yours💌</p>
+      </div>
+      <button class="action-btn" onclick="location.reload()">Play Again 🎈</button>
+    </div>
+
+  </div>
+
+  <script>
+    // 1. COUNTDOWN TO 27 NOVEMBER
+    function updateCountdown() {
+      const now = new Date();
+      let year = now.getFullYear();
+      let bday = new Date(year, 10, 27, 0, 0, 0);
+
+      if (now.getMonth() === 10 && now.getDate() === 27) {
+        document.getElementById('countdown-title').innerText = "🎉 IT'S YOUR SPECIAL DAY! 🎉";
+        document.getElementById('timer').innerText = "HAPPY BIRTHDAY RAHUL! 🎂🥳";
+        return;
+      }
+
+      if (now > bday) {
+        bday = new Date(year + 1, 10, 27, 0, 0, 0);
+      }
+
+      const diff = bday - now;
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+      const mins = Math.floor((diff / 1000 / 60) % 60);
+      const secs = Math.floor((diff / 1000) % 60);
+
+      document.getElementById('timer').innerText = days + "d " + hours + "h " + mins + "m " + secs + "s";
+    }
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
+
+    // 2. BALLOON MINI-GAME
+    let score = 0;
+    const targetScore = 8;
+    const emojis = ["🎈", "💖", "💕", "🎂", "🎁", "💝"];
+    let gameActive = true;
+
+    function spawnBalloon() {
+      if (!gameActive) return;
+
+      const balloon = document.createElement("div");
+      balloon.className = "balloon";
+      balloon.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+      balloon.style.left = (Math.random() * 80 + 5) + "vw";
+      
+      const duration = Math.random() * 2 + 3.5;
+      balloon.style.animationDuration = duration + "s";
+
+      function popBalloon() {
+        if (!gameActive || balloon.dataset.popped) return;
+        balloon.dataset.popped = "true";
+        score++;
+        document.getElementById("score").innerText = score;
+        balloon.innerText = "💥";
+        setTimeout(() => balloon.remove(), 150);
+
+        if (score >= targetScore) {
+          unlockSurprises();
+        }
+      }
+
+      balloon.addEventListener("click", popBalloon);
+      balloon.addEventListener("touchstart", (e) => {
+        e.preventDefault();
+        popBalloon();
+      });
+
+      document.body.appendChild(balloon);
+      setTimeout(() => {
+        if (balloon.parentNode) balloon.remove();
+      }, duration * 1000);
+    }
+
+    const spawner = setInterval(spawnBalloon, 700);
+
+    // 3. UNLOCK SURPRISES + CONFETTI
+    function unlockSurprises() {
+      gameActive = false;
+      clearInterval(spawner);
+      document.querySelectorAll(".balloon").forEach(b => b.remove());
+
+      document.getElementById("game-area").style.display = "none";
+      document.getElementById("surprise-container").style.display = "flex";
+
+      launchConfetti();
+      initScratchCards();
+    }
+
+    function launchConfetti() {
+      const colors = ["#ffd166", "#d63384", "#06d6a0", "#ffffff", "#ffbe0b"];
+      for (let i = 0; i < 70; i++) {
+        const piece = document.createElement("div");
+        piece.className = "confetti";
+        piece.style.left = Math.random() * 100 + "vw";
+        piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        piece.style.animationDuration = (Math.random() * 1.5 + 1.8) + "s";
+        document.body.appendChild(piece);
+        setTimeout(() => piece.remove(), 3500);
+      }
+    }
+
+    // 4. INTERACTIVE BIRTHDAY CAKE CANDLES
+    let candlesLeft = 4;
+    function blowCandle(candleEl) {
+      const flame = candleEl.querySelector(".flame");
+      if (!flame.classList.contains("out")) {
+        flame.classList.add("out");
+        candlesLeft--;
+        if (candlesLeft > 0) {
+          document.getElementById("wish-status").innerText = candlesLeft + " candle(s) left! Keep blowing 🌬️";
+        } else {
+          document.getElementById("wish-status").innerText = "🧿 May Shree ji always shield you from all negativity and harm! 🧿";
+          launchConfetti();
+        }
+      }
+    }
+
+    // 5. SPIN THE BIRTHDAY WHEEL
+    let currentDeg = 0;
+    const wheelPrizes = [
+      "🍦 Ice Cream/lolipop Treat from my side!",
+      "🔔♂️ Send you 30 days voice note!",
+      "🥊 No fight and argument from my side for 4 month!",
+      "💋 100 Bonus Kisses without delay!",
+      "🎶 Dedicated Love Songs playlist Just For You!",
+      "📸 I will send my 5 childhood photos to you!"
+    ];
+
+    function spinWheel() {
+      const wheel = document.getElementById("spin-wheel");
+      const extraSpin = Math.floor(Math.random() * 360) + 1440;
+      currentDeg += extraSpin;
+      wheel.style.transform = `rotate(${currentDeg}deg)`;
+
+      document.getElementById("wheel-result").innerText = "Spinning... ✨";
+
+      setTimeout(() => {
+        const won = wheelPrizes[Math.floor(Math.random() * wheelPrizes.length)];
+        document.getElementById("wheel-result").innerText = "You won: " + won;
+        launchConfetti();
+      }, 3500);
+    }
+
+    // 6. REASONS I LOVE YOU TAP DECK
+    const reasons = [
+      "Your smile instantly fixes my worst days. 😊",
+      "You make me feel completely safe, heard, and cared for. 🫂",
+      "Even doing nothing with you feels like my favorite memory. ✨",
+      "Your kindness and the way you treat people makes me proud of you every day.❣️ ",
+      "You are my best friend, my safe place, and my favorite person. 🐒💕",
+      "Every ordinary moment turns into golden hour when I am with you. 🌅"
+    ];
+    let reasonIndex = -1;
+
+    function nextReason() {
+      reasonIndex = (reasonIndex + 1) % reasons.length;
+      document.getElementById("reason-text").innerText = reasons[reasonIndex];
+      document.getElementById("reason-counter").innerText = `Reason ${reasonIndex + 1} of ${reasons.length} (Tap for next)`;
+    }
+
+    // 7. INTERACTIVE SCRATCH CARDS
+    function initScratchCards() {
+      const canvases = document.querySelectorAll(".scratch-pad");
+
+      canvases.forEach((canvas) => {
+        const ctx = canvas.getContext("2d");
+        const rect = canvas.parentElement.getBoundingClientRect();
+        canvas.width = rect.width;
+        canvas.height = rect.height;
+
+        const grad = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+        grad.addColorStop(0, "#d9d9d9");
+        grad.addColorStop(0.5, "#bfbfbf");
+        grad.addColorStop(1, "#a6a6a6");
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = "#555";
+        ctx.font = "bold 15px Segoe UI, sans-serif";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText("✨ Scratch Here ✨", canvas.width / 2, canvas.height / 2);
+
+        let isDrawing = false;
+
+        function scratch(x, y) {
+          ctx.globalCompositeOperation = "destination-out";
+          ctx.beginPath();
+          ctx.arc(x, y, 22, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        function getPos(e) {
+          const r = canvas.getBoundingClientRect();
+          const clientX = e.touches ? e.touches.clientX : e.clientX;
+          const clientY = e.touches ? e.touches.clientY : e.clientY;
+          return { x: clientX - r.left, y: clientY - r.top };
+        }
+
+        canvas.addEventListener("mousedown", (e) => {
+          isDrawing = true;
+          const pos = getPos(e);
+          scratch(pos.x, pos.y);
+        });
+
+        canvas.addEventListener("mousemove", (e) => {
+          if (!isDrawing) return;
+          const pos = getPos(e);
+          scratch(pos.x, pos.y);
+        });
+
+        window.addEventListener("mouseup", () => {
+          isDrawing = false;
+        });
+
+        canvas.addEventListener("touchstart", (e) => {
+          e.preventDefault();
+          isDrawing = true;
+          const pos = getPos(e);
+          scratch(pos.x, pos.y);
+        });
+
+        canvas.addEventListener("touchmove", (e) => {
+          e.preventDefault();
+          if (!isDrawing) return;
+          const pos = getPos(e);
+          scratch(pos.x, pos.y);
+        });
+
+        canvas.addEventListener("touchend", () => {
+          isDrawing = false;
+        });
+      });
+    }
+
+    // 8. REVEAL ALL BUTTON
+    function revealAllGifts() {
+      document.querySelectorAll(".scratch-pad").forEach((canvas) => {
+        canvas.style.transition = "opacity 0.5s ease";
+        canvas.style.opacity = "0";
+        setTimeout(() => canvas.remove(), 500);
+      });
+      launchConfetti();
+    }
+  </script>
+
+</body>
+</html>
